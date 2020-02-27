@@ -3,7 +3,6 @@
 Projeto para desenvolvimento de API do projeto da disciplina de TIS-V. 
 
 ## Instalação do Ambiente
- 
 ```
 virtualenv --python python3.7 env
 source env/bin/activate
@@ -17,7 +16,6 @@ Para execução da API, as seguintes variáveis de ambiente devem ser configurad
 ```
 Nada aqui ainda :3
 ```
-
 
 ## Execução 
 ```
