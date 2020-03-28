@@ -4,6 +4,7 @@ import logging
 import os
 
 from flood.endpoints.status import blueprint as status_bp
+from flood.endpoints.groups import blueprint as groups_bp
 
 _logger = logging.getLogger(__name__)
 
@@ -21,6 +22,7 @@ def hello():
     return "The Horribly Fast Api with Extremely Efficient Endpoints by Lucas Ferreira"
 
 app.register_blueprint(status_bp)
+app.register_blueprint(groups_bp)
 
 
 if __name__ == "__main__":
