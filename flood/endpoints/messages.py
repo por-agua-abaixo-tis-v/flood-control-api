@@ -18,7 +18,22 @@ blueprint = Blueprint('messages', __name__)
 @blueprint.route('/messages', methods=['GET', 'OPTIONS'])
 def get_messages():
     result = []
-    messages = message_model.list()
+
+    group_id = None
+    try:
+        group_id = request.args['group_id']
+    except KeyError:
+        pass
+
+    if group_id is not None:
+        group = group_model.get(request.args['group_id'])
+        if group is None:
+            raise endpoints_exception(404, "GROUP_NOT_FOUND")
+        messages = message_model.list_group(group)
+
+    else:
+        messages = message_model.list()
+
     for message in messages:
         result.append(message.to_dict())
     return jsonify(result), 200

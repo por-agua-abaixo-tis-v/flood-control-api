@@ -13,10 +13,12 @@ from flood.models.group import Group
 from flood.models import db_session, Base, get_id, to_dict
 
 import logging
+
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
 dateformat = '%Y-%m-%dT%H:%M:%S'
+
 
 class Message(Base):
     __tablename__ = 'messages'
@@ -53,6 +55,7 @@ class Message(Base):
 
         return result
 
+
 def buid_object_from_row(row):
     message = Message(
         id=row.get("id", None),
@@ -65,6 +68,7 @@ def buid_object_from_row(row):
         message.created_at = datetime.strptime(row["created_at"], dateformat)
 
     return message
+
 
 @db_session
 def create(session, text, user, group):
@@ -81,16 +85,29 @@ def create(session, text, user, group):
     r = to_dict(result)
     return buid_object_from_row(r)
 
+
 @db_session
 def list(session):
     _logger.info(
         "LISNTING_MESSAGE_MODEL",
     )
-
     data = []
-
     result = session.query(Message).all()
+    if result is None:
+        return data
+    else:
+        for row in result:
+            r = to_dict(row)
+            data.append(buid_object_from_row(r))
+        return data
 
+@db_session
+def list_group(session, group):
+    _logger.info(
+        "LISNTING_MESSAGE_MODEL",
+    )
+    data = []
+    result = session.query(Message).filter(Message.group_id == group.id).order_by(Message.created_at)
     if result is None:
         return data
     else:
