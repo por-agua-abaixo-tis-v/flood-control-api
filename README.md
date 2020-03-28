@@ -14,7 +14,10 @@ pip install -r requirements.txt
 ## Variáveis de ambiente 
 Para execução da API, as seguintes variáveis de ambiente devem ser configuradas:
 ```
-Nada aqui ainda :3
+DB_USER --> user do banco;
+DB_PASS --> senha do banco ;
+DB_IP --> host do banco;
+DB --> nome schema;
 ```
 
 ## Execução 
