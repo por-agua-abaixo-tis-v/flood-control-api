@@ -67,14 +67,14 @@ def buid_object_from_row(row):
     return message
 
 @db_session
-def create(session, message):
+def create(session, text, user, group):
     _logger.info(
-        "CREATING_MESSAGE_MODEL: {}".format(message),
+        "CREATING_MESSAGE_MODEL:  {}".format({'text': text, 'user': user, 'group': group.id}),
     )
     result = Message(
-        group_id=message.get("group_id", None),
-        user=message.get("user", None),
-        text=message.get("text", None),
+        group_id=group.id,
+        user=user,
+        text=text,
     )
     session.add(result)
     session.flush()
@@ -114,9 +114,9 @@ def get(session, id):
 
 
 @db_session
-def delete(session, group):
+def delete(session, message):
     _logger.info(
-        "DELETING_MESSAGE_MODEL: {}".format(group.to_dict()),
+        "DELETING_MESSAGE_MODEL: {}".format(message.to_dict()),
     )
-    x = session.query(Group).get(group.id)
+    x = session.query(Message).get(message.id)
     session.delete(x)
