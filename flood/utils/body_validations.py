@@ -4,8 +4,7 @@
 from flood.endpoints import endpoints_exception
 
 def validate_group(body):
-    required_keys = ['namme']
+    required_keys = ['name']
     for key in required_keys:
-
-        if 'name' not in body.keys():
+        if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key}")
