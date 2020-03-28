@@ -13,6 +13,7 @@ from datetime import datetime
 import warnings
 
 import logging
+logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
 
@@ -111,7 +112,7 @@ def config():
 
 
 def get_id():
-    return str(uuid.uuid4()).replace("-", "")
+    return str(uuid.uuid4())
 
 
 def is_database_ok():

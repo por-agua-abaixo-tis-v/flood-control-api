@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
-import logging
+import flood.models.group as group_model
 
 from flask import Blueprint, jsonify, request
 
+import logging
+logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
 
@@ -20,4 +22,7 @@ def get_groups():
 def post_group():
     body = request.json
     name = body['name']
+    group_model.create(body)
+    return '', 200
+
 
