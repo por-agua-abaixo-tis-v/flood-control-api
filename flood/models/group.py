@@ -29,7 +29,7 @@ class Group(Base):
     )
 
     def __repr__(self):
-        return "<Group(id='%s', name=%s)>Be" % (self.id, self.name)
+        return f"<Group(id={self.id}, name={self.name})>"
 
     def to_dict(self):
         result = {
@@ -58,6 +58,24 @@ def create(session, group):
     r = to_dict(result)
     return buid_object_from_row(r)
 
+@db_session
+def list(session):
+    _logger.info(
+        "LISNTING_GROUP_MODEL",
+    )
+
+    data = []
+
+    result = session.query(Group).all()
+
+    if result is None:
+        return data
+    else:
+        for row in result:
+            r = to_dict(row)
+            data.append(buid_object_from_row(r))
+        return data
+
 
 @db_session
 def get(session, id):
@@ -70,3 +88,12 @@ def get(session, id):
     else:
         r = to_dict(result)
         return buid_object_from_row(r)
+
+
+@db_session
+def delete(session, group):
+    _logger.info(
+        "DELETING_GROUP_MODEL: {}".format(group.to_dict()),
+    )
+    x = session.query(Group).get(group.id)
+    session.delete(x)
