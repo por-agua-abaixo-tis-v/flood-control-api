@@ -27,6 +27,12 @@ class Group(Base):
     name = Column(
         mysql.VARCHAR(length=128), nullable=False
     )
+    latitude = Column(
+        mysql.DOUBLE(), nullable=True
+    )
+    longitude = Column(
+        mysql.DOUBLE(), nullable=True
+    )
 
     def __repr__(self):
         return f"<Group(id={self.id}, name={self.name})>"
@@ -34,7 +40,9 @@ class Group(Base):
     def to_dict(self):
         result = {
             "id": self.id,
-            "name": self.name
+            "name": self.name,
+            "latitude": self.latitude,
+            "longitude": self.longitude
         }
         return result
 
