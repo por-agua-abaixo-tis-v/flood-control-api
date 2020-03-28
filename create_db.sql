@@ -1,0 +1,8 @@
+DROP TABLE IF EXISTS `group` ;
+
+CREATE TABLE IF NOT EXISTS `group` (
+  `id` VARCHAR(64) NOT NULL,
+  `name` VARCHAR(128) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `NAME` (`name` ASC) VISIBLE)
+ENGINE = InnoDB;
