@@ -83,6 +83,7 @@ def create(session, text, user, group):
     session.add(result)
     session.flush()
     r = to_dict(result)
+    session.commit()
     return buid_object_from_row(r)
 
 
@@ -137,3 +138,4 @@ def delete(session, message):
     )
     x = session.query(Message).get(message.id)
     session.delete(x)
+    session.commit()
