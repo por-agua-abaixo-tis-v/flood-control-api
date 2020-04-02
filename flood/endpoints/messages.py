@@ -33,9 +33,9 @@ def get_messages():
 
     else:
         messages = message_model.list()
-
-    for message in messages:
-        result.append(message.to_dict())
+    if messages is not None:
+        for message in messages:
+            result.append(message.to_dict())
     return jsonify(result), 200
 
 

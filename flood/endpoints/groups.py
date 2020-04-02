@@ -19,8 +19,9 @@ blueprint = Blueprint('groups', __name__)
 def get_groups():
     result = []
     groups = group_model.list()
-    for group in groups:
-        result.append(group.to_dict())
+    if groups is not None:
+        for group in groups:
+            result.append(group.to_dict())
     return jsonify(result), 200
 
 
