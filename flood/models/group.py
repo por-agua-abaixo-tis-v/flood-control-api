@@ -83,8 +83,10 @@ def create(session, group):
         name=group.get("name")
     )
     session.add(result)
+
     session.flush()
     r = to_dict(result)
+    session.commit()
     return buid_object_from_row(r)
 
 @db_session
@@ -126,3 +128,4 @@ def delete(session, group):
     )
     x = session.query(Group).get(group.id)
     session.delete(x)
+    session.commit()
