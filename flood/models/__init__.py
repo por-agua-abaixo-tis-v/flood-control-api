@@ -23,7 +23,7 @@ _engine = None
 _config = None
 
 
-user = os.environ.get("DB_USER", "").replace("\n", "")
+db_user = os.environ.get("DB_USER", "").replace("\n", "")
 password = os.environ.get("DB_PASS", "").replace("\n", "")
 host = os.environ.get("DB_IP", "").replace("\n", "")
 database = os.environ.get("DB", "").replace("\n", "")
@@ -32,8 +32,8 @@ database = os.environ.get("DB", "").replace("\n", "")
 def _get_session_class():
     global _engine
     _engine = create_engine(
-        'mysql+pymysql://{user}:{password}@{host_ip}:{port}/{database}'.format(
-            user=user.strip('\n').strip(' '),
+        'mysql+pymysql://{db_user}:{password}@{host_ip}:{port}/{database}'.format(
+            db_user=db_user.strip('\n').strip(' '),
             password=password.strip('\n').strip(' '),
             host_ip=host,
             port=3306,

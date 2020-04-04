@@ -75,7 +75,7 @@ def create(session, user):
     result = User(
         name=user.get("name"),
         email=user.get("email"),
-        pswd=user.get("passwd")
+        pswd=user.get("pswd")
     )
     session.add(result)
 

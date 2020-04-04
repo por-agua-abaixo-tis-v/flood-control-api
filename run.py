@@ -5,6 +5,7 @@ import os
 from flood.endpoints.status import blueprint as status_bp
 from flood.endpoints.groups import blueprint as groups_bp
 from flood.endpoints.messages import blueprint as messages_bp
+from flood.endpoints.users import blueprint as users_bp
 import warnings
 from flood import config as flood_config
 
@@ -28,6 +29,7 @@ with warnings.catch_warnings(record=True):
 
 app.register_blueprint(status_bp)
 app.register_blueprint(groups_bp)
+app.register_blueprint(users_bp)
 app.register_blueprint(messages_bp)
 
 if __name__ == "__main__":
