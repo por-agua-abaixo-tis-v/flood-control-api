@@ -89,6 +89,7 @@ def from_tuple_to_dict(row):
             data[key] = data[key].isoformat()
     return data
 
+
 def create_tables():
     global _engine
     Base.metadata.drop_all(_engine)

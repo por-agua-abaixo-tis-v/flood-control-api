@@ -1,18 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
+import logging
 from datetime import datetime
 
-from sqlalchemy import between, func, ForeignKey
-from sqlalchemy.schema import Column
-from sqlalchemy.types import TIMESTAMP
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
+from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
-from sqlalchemy import and_
-from flood.models.group import Group
-from flood.models import db_session, Base, get_id, to_dict
+from sqlalchemy.types import TIMESTAMP
 
-import logging
+from flood.models import db_session, Base, get_id, to_dict
+from flood.models.group import Group
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
@@ -101,6 +100,7 @@ def list(session):
             r = to_dict(row)
             data.append(buid_object_from_row(r))
         return data
+
 
 @db_session
 def list_group(session, group):

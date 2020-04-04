@@ -1,18 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
+import logging
 from datetime import datetime
 
-from sqlalchemy import between, func
-from sqlalchemy.schema import Column
-from sqlalchemy.types import TIMESTAMP
 from sqlalchemy.dialects import mysql
+from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
-from sqlalchemy import and_
+from sqlalchemy.types import TIMESTAMP
 
 from flood.models import db_session, Base, get_id, to_dict
 
-import logging
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
@@ -36,10 +34,6 @@ class Group(Base):
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
-    # updated_at = Column(
-    #     TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'),
-    #     server_onupdate=text('CURRENT_TIMESTAMP'), nullable=False, index=True
-    # )
 
     def __repr__(self):
         return f"<Group(id={self.id}, name={self.name})>"
@@ -51,14 +45,12 @@ class Group(Base):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "created_at": None
-            # "updated_at": None
         }
         if self.created_at is not None:
             result['created_at'] = self.created_at.isoformat()
-        # if self.updated_at is not None:
-        #     result['updated_at'] = self.updated_at.isoformat()
 
         return result
+
 
 def buid_object_from_row(row):
     group = Group(
@@ -69,10 +61,9 @@ def buid_object_from_row(row):
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
-    # if "updated_at" in row.keys():
-    #     group.updated_at = datetime.strptime(row["updated_at"], dateformat)
 
     return group
+
 
 @db_session
 def create(session, group):
@@ -88,6 +79,7 @@ def create(session, group):
     r = to_dict(result)
     session.commit()
     return buid_object_from_row(r)
+
 
 @db_session
 def list(session):
