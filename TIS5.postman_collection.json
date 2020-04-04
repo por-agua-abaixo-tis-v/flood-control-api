@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Alerta Barão homem de melo\"\n}",
+							"raw": "{\n\t\"name\": \"Alerta Casa do prexos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2\n\t\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -119,6 +119,239 @@
 							"path": [
 								"groups",
 								"<id>"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"lucas@email.com\",\n\t\"name\": \"lucas\",\n\t\"pswd\": \"samba123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/<id>",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"<id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/<id>",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"<id>"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/<id>/auth?pswd=samba123",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"<id>",
+								"auth"
+							],
+							"query": [
+								{
+									"key": "pswd",
+									"value": "samba123"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user geolocation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"latitude\" : -19.973655,\n\t\"longitude\": -43.968458\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/<id>/geolocation",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"<id>",
+								"geolocation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user groups",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/<id>/db1437c2-f246-4b1d-aff5-1bee638ad8b8/groups",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"<id>",
+								"db1437c2-f246-4b1d-aff5-1bee638ad8b8",
+								"groups"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "-19.973655",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "-43.968458",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -257,7 +490,7 @@
 					"response": []
 				},
 				{
-					"name": "list messageswith filters",
+					"name": "list messages with filters",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},

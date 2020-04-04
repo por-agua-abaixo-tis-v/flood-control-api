@@ -93,11 +93,34 @@ def update_user_geolocation(user_id):
     groups = group_model.list()
     for group in groups:
         distance = geolocation_utils.check_range(latitude,longitude, group)
-        if distance:
+        if distance is not None:
             user_group_model.associate(group, user)
             aux = group.to_dict()
             aux['distance'] = round(distance, 2)
             result.append(aux)
 
+    return jsonify(result), 200
+
+
+
+
+@blueprint.route('/users/<user_id>/groups', methods=['GET', 'OPTIONS'])
+def get_user_grops(user_id):
+    result = []
+
+    user = user_model.get(user_id)
+
+    if user is None:
+        raise endpoints_exception(404, "USER_NOT_FOUND")
+
+    latitude = request.args.get('latitude', None)
+    longitude = request.args.get('longitude', None)
+    groups = user_group_model.get_user_groups(user)
+
+    for group in groups:
+        aux = group.to_dict()
+        if latitude is not None and longitude is not None:
+            aux['distance'] = round(geolocation_utils.check_range(latitude,longitude, group), 2)
+        result.append(aux)
 
     return jsonify(result), 200
