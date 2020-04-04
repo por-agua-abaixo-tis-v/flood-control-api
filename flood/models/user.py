@@ -1,23 +1,26 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
+
 import logging
 from datetime import datetime
 
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
 from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
 from sqlalchemy.types import TIMESTAMP
 
 from flood.models import db_session, Base, get_id, to_dict
+from flood.models.group import Group
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
 dateformat = '%Y-%m-%dT%H:%M:%S'
 
-class Group(Base):
-    __tablename__ = 'groups'
+class User(Base):
+    __tablename__ = 'users'
 
     id = Column(
         mysql.VARCHAR(length=64), default=get_id, primary_key=True
@@ -25,25 +28,24 @@ class Group(Base):
     name = Column(
         mysql.VARCHAR(length=128), nullable=False
     )
-    latitude = Column(
-        mysql.DOUBLE(), nullable=True
+    email = Column(
+        mysql.VARCHAR(length=128), nullable=False
     )
-    longitude = Column(
-        mysql.DOUBLE(), nullable=True
+    pswd = Column(
+        mysql.VARCHAR(length=128), nullable=False
     )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
 
     def __repr__(self):
-        return f"<Group(id={self.id}, name={self.name})>"
+        return f"<User(id={self.id}, name={self.name})>"
 
     def to_dict(self):
         result = {
             "id": self.id,
             "name": self.name,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
+            "email": self.email,
             "created_at": None
         }
         if self.created_at is not None:
@@ -53,25 +55,27 @@ class Group(Base):
 
 
 def buid_object_from_row(row):
-    group = Group(
+    user = User(
         name=row.get("name", None),
         id=row.get("id", None),
-        latitude=row.get("latitude", None),
-        longitude=row.get("longitude", None),
+        email=row.get("email", None),
+        pswd=row.get("pswd", None),
     )
     if "created_at" in row.keys():
-        group.created_at = datetime.strptime(row["created_at"], dateformat)
+        user.created_at = datetime.strptime(row["created_at"], dateformat)
 
-    return group
+    return user
 
 
 @db_session
-def create(session, group):
+def create(session, user):
     _logger.info(
-        "CREATING_GROUP_MODEL: {}".format(group),
+        "CREATING_USER_MODEL: {}".format(user),
     )
-    result = Group(
-        name=group.get("name")
+    result = User(
+        name=user.get("name"),
+        email=user.get("email"),
+        pswd=user.get("pswd")
     )
     session.add(result)
 
@@ -84,12 +88,12 @@ def create(session, group):
 @db_session
 def list(session):
     _logger.info(
-        "LISNTING_GROUP_MODEL",
+        "LISNTING_USER_MODEL",
     )
 
     data = []
 
-    result = session.query(Group).all()
+    result = session.query(User).all()
 
     if result is None:
         return data
@@ -103,9 +107,9 @@ def list(session):
 @db_session
 def get(session, id):
     _logger.info(
-        "GETTING_GROUP_MODEL: {}".format(id),
+        "GETTING_USER_MODEL: {}".format(id),
     )
-    result = session.query(Group).get(id)
+    result = session.query(User).get(id)
     if result is None:
         return None
     else:
@@ -114,10 +118,10 @@ def get(session, id):
 
 
 @db_session
-def delete(session, group):
+def delete(session, user):
     _logger.info(
-        "DELETING_GROUP_MODEL: {}".format(group.to_dict()),
+        "DELETING_USER_MODEL: {}".format(user.to_dict()),
     )
-    x = session.query(Group).get(group.id)
+    x = session.query(Group).get(user.id)
     session.delete(x)
     session.commit()

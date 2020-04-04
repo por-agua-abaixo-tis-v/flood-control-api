@@ -15,3 +15,10 @@ def validate_message(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+
+
+def validate_user(body):
+    required_keys = ['email', 'pswd', 'name']
+    for key in required_keys:
+        if key not in body.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")

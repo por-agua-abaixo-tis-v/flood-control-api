@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*
 
 
-from flood.models import is_database_ok
-from flask import Blueprint, jsonify, request
-
 import logging
+
+from flask import Blueprint, jsonify
+
+from flood.models import is_database_ok
+
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
 
@@ -24,6 +26,6 @@ def get_ready():
         "APP": "OK",
         "DATABASE": str(is_database_ok())
     }
-    return '', 200
+    return jsonify(result), 200
 
 
