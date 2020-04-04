@@ -16,6 +16,7 @@ _logger = logging.getLogger(__name__)
 
 dateformat = '%Y-%m-%dT%H:%M:%S'
 
+
 class Group(Base):
     __tablename__ = 'groups'
 
@@ -31,6 +32,9 @@ class Group(Base):
     longitude = Column(
         mysql.DOUBLE(), nullable=True
     )
+    range = Column(
+        mysql.INTEGER, nullable=True
+    )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
@@ -44,6 +48,7 @@ class Group(Base):
             "name": self.name,
             "latitude": self.latitude,
             "longitude": self.longitude,
+            "range": self.range,
             "created_at": None
         }
         if self.created_at is not None:
@@ -58,6 +63,7 @@ def buid_object_from_row(row):
         id=row.get("id", None),
         latitude=row.get("latitude", None),
         longitude=row.get("longitude", None),
+        range=row.get("range", None),
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
@@ -77,7 +83,8 @@ def create(session, group):
     result = Group(
         name=group.get("name"),
         latitude=group.get("latitude", None),
-        longitude=group.get("longitude", None)
+        longitude=group.get("longitude", None),
+        range=group.get("range", 2)
     )
     session.add(result)
 

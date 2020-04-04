@@ -8,6 +8,8 @@ def validate_group(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+        if body[key] is None:
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
 
 def validate_message(body):
@@ -15,6 +17,8 @@ def validate_message(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+        if body[key] is None:
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
 
 def validate_user(body):
@@ -22,6 +26,8 @@ def validate_user(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+        if body[key] is None:
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
 
 def validate_getolocation(body):
@@ -29,3 +35,5 @@ def validate_getolocation(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+        if body[key] is None:
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")

@@ -3,9 +3,10 @@
 
 import flood.models.user as user_model
 import flood.models.group as group_model
+import flood.models.user_groups as user_group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, password_utils, query_param_validations
+from flood.utils import body_validations, password_utils, query_param_validations, geolocation_utils
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -87,9 +88,16 @@ def update_user_geolocation(user_id):
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
 
+    latitude = body.get('latitude')
+    longitude = body.get('longitude')
     groups = group_model.list()
     for group in groups:
-        result.append(group.to_dict())
+        distance = geolocation_utils.check_range(latitude,longitude, group)
+        if distance:
+            user_group_model.associate(group, user)
+            aux = group.to_dict()
+            aux['distance'] = round(distance, 2)
+            result.append(aux)
 
 
     return jsonify(result), 200
