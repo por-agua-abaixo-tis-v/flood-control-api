@@ -1,18 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
 
+import logging
 from datetime import datetime
 
-from sqlalchemy import between, func, ForeignKey
-from sqlalchemy.schema import Column
-from sqlalchemy.types import TIMESTAMP
+from sqlalchemy import ForeignKey
 from sqlalchemy.dialects import mysql
+from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
-from sqlalchemy import and_
-from flood.models.group import Group
-from flood.models import db_session, Base, get_id, to_dict
+from sqlalchemy.types import TIMESTAMP
 
-import logging
+from flood.models import db_session, Base, get_id, to_dict
+from flood.models.group import Group
+from flood.models.user import User
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
@@ -27,7 +27,10 @@ class Message(Base):
         mysql.VARCHAR(length=64), default=get_id, primary_key=True
     )
     group_id = Column(
-        mysql.VARCHAR(length=64), ForeignKey(Group.id), nullable=False, index=True
+        mysql.VARCHAR(length=64), ForeignKey(Group.id, ondelete='CASCADE'), nullable=False, index=True
+    )
+    user_id = Column(
+        mysql.VARCHAR(length=64), ForeignKey(User.id, ondelete='CASCADE'), nullable=False, index=True
     )
     user = Column(
         mysql.VARCHAR(length=64), nullable=False
@@ -47,6 +50,7 @@ class Message(Base):
             "id": self.id,
             "group_id": self.group_id,
             "user": self.user,
+            "user_id": self.user_id,
             "text": self.text,
             "created_at": None
         }
@@ -61,6 +65,7 @@ def buid_object_from_row(row):
         id=row.get("id", None),
         group_id=row.get("group_id", None),
         user=row.get("user", None),
+        user_id=row.get("user_id", None),
         text=row.get("text", None),
 
     )
@@ -77,7 +82,8 @@ def create(session, text, user, group):
     )
     result = Message(
         group_id=group.id,
-        user=user,
+        user=user.name,
+        user_id=user.id,
         text=text,
     )
     session.add(result)
@@ -101,6 +107,7 @@ def list(session):
             r = to_dict(row)
             data.append(buid_object_from_row(r))
         return data
+
 
 @db_session
 def list_group(session, group):
