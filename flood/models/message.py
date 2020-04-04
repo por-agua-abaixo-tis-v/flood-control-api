@@ -27,7 +27,7 @@ class Message(Base):
         mysql.VARCHAR(length=64), default=get_id, primary_key=True
     )
     group_id = Column(
-        mysql.VARCHAR(length=64), ForeignKey(Group.id), nullable=False, index=True
+        mysql.VARCHAR(length=64), ForeignKey(Group.id, ondelete='CASCADE'), nullable=False, index=True
     )
     user = Column(
         mysql.VARCHAR(length=64), nullable=False
