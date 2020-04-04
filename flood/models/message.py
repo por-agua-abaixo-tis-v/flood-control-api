@@ -12,6 +12,7 @@ from sqlalchemy.types import TIMESTAMP
 
 from flood.models import db_session, Base, get_id, to_dict
 from flood.models.group import Group
+from flood.models.user import User
 
 logging.basicConfig(level=logging.INFO)
 _logger = logging.getLogger(__name__)
@@ -27,6 +28,9 @@ class Message(Base):
     )
     group_id = Column(
         mysql.VARCHAR(length=64), ForeignKey(Group.id, ondelete='CASCADE'), nullable=False, index=True
+    )
+    user_id = Column(
+        mysql.VARCHAR(length=64), ForeignKey(User.id, ondelete='CASCADE'), nullable=False, index=True
     )
     user = Column(
         mysql.VARCHAR(length=64), nullable=False
@@ -46,6 +50,7 @@ class Message(Base):
             "id": self.id,
             "group_id": self.group_id,
             "user": self.user,
+            "user_id": self.user_id,
             "text": self.text,
             "created_at": None
         }
@@ -60,6 +65,7 @@ def buid_object_from_row(row):
         id=row.get("id", None),
         group_id=row.get("group_id", None),
         user=row.get("user", None),
+        user_id=row.get("user_id", None),
         text=row.get("text", None),
 
     )
@@ -76,7 +82,8 @@ def create(session, text, user, group):
     )
     result = Message(
         group_id=group.id,
-        user=user,
+        user=user.name,
+        user_id=user.id,
         text=text,
     )
     session.add(result)
