@@ -9,3 +9,10 @@ def validate_message(args):
     for key in required_keys:
         if key not in args.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing query param {key}")
+
+
+def validate_auth(args):
+    required_keys = ['pswd']
+    for key in required_keys:
+        if key not in args.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing query param {key}")
