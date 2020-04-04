@@ -22,3 +22,10 @@ def validate_user(body):
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+
+
+def validate_getolocation(body):
+    required_keys = ['latitude', 'longitude']
+    for key in required_keys:
+        if key not in body.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")

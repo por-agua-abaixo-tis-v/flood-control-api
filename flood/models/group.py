@@ -61,6 +61,10 @@ def buid_object_from_row(row):
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
+    if group.latitude:
+        group.latitude = float(group.latitude)
+    if group.longitude:
+        group.longitude = float(group.longitude)
 
     return group
 
@@ -71,7 +75,9 @@ def create(session, group):
         "CREATING_GROUP_MODEL: {}".format(group),
     )
     result = Group(
-        name=group.get("name")
+        name=group.get("name"),
+        latitude=group.get("latitude", None),
+        longitude=group.get("longitude", None)
     )
     session.add(result)
 

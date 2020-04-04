@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*
 
 import flood.models.user as user_model
+import flood.models.group as group_model
 
 from flask import Blueprint, jsonify, request
 from flood.utils import body_validations, password_utils, query_param_validations
@@ -69,3 +70,26 @@ def auth_user(user_id):
         raise endpoints_exception(401, "UNAUTHORIZED")
     else:
         return jsonify(user.to_dict()), 200
+
+
+####################################
+#            GEOLOCATION           #
+####################################
+
+
+@blueprint.route('/users/<user_id>/geolocation', methods=['POST'])
+def update_user_geolocation(user_id):
+    result = []
+    body = request.json
+    body_validations.validate_getolocation(body)
+    user = user_model.get(user_id)
+
+    if user is None:
+        raise endpoints_exception(404, "USER_NOT_FOUND")
+
+    groups = group_model.list()
+    for group in groups:
+        result.append(group.to_dict())
+
+
+    return jsonify(result), 200
