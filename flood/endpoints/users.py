@@ -6,7 +6,7 @@ import flood.models.group as group_model
 import flood.models.user_groups as user_group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, password_utils, query_param_validations, geolocation_utils
+from flood.utils import body_validations, password_utils, query_param_validations, geolocation_utils, jwt_token
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -71,7 +71,7 @@ def auth_user(user_id):
     if password_utils.convert_md5(body['pswd']) != user.pswd:
         raise endpoints_exception(401, "UNAUTHORIZED")
     else:
-        return jsonify(user.to_dict()), 200
+        return jwt_token.jwt_tokem(user_id, user.email, user.pswd), 200
 
 
 ####################################
