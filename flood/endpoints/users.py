@@ -60,11 +60,13 @@ def delete_user(user_id):
 ####################################
 
 
-@blueprint.route('/users/<user_id>/auth', methods=['POST'])
-def auth_user(user_id):
+@blueprint.route('/users/auth', methods=['POST'])
+def auth_user():
+    result = {}
     body = request.json
     body_validations.validate_auth(body)
-    user = user_model.get(user_id)
+
+    user = user_model.get_by_email(body['email'])
 
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
@@ -72,7 +74,9 @@ def auth_user(user_id):
     if password_utils.convert_md5(body['pswd']) != user.pswd:
         raise endpoints_exception(401, "UNAUTHORIZED")
     else:
-        return jwt_token.jwt_token(user_id, user.email, user.pswd), 200
+        result['user'] = user.to_dict()
+        result['token'] = jwt_token.jwt_token(user.id, user.email, user.pswd)
+        return jsonify(result), 200
 
 
 ####################################

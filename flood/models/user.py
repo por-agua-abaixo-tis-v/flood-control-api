@@ -116,6 +116,18 @@ def get(session, id):
         r = to_dict(result)
         return buid_object_from_row(r)
 
+@db_session
+def get_by_email(session, email):
+    _logger.info(
+        "GETTING_USER_MODELBY_EMAIL: {}".format(id),
+    )
+    result = session.query(User).filter(User.email == email).first()
+    if result is None:
+        return None
+    else:
+        r = to_dict(result)
+        return buid_object_from_row(r)
+
 
 @db_session
 def delete(session, user):
