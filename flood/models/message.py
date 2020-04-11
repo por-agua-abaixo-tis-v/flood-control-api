@@ -148,15 +148,22 @@ def delete(session, message):
     session.commit()
 
 @db_session
-def get_user_messages(session, user, start_date):
+def get_user_messages(session, user, groups, start_date):
     _logger.info(
         f"LISNTING_USER_MESSAGES: {user.id}",
     )
     data = []
+    group_ids = (group.id for group in groups)
+
     if start_date:
-        result = session.query(Message).filter(Message.user_id == user.id).filter(Message.created_at > start_date).all()
+        result = session.query(Message)\
+            .filter(Message.group_id.in_(group_ids))\
+            .filter(Message.created_at > start_date)\
+            .order_by(Message.created_at.asc()).all()
     else:
-        result = session.query(Message).filter(Message.user_id == user.id).all()
+        result = session.query(Message)\
+            .filter(Message.group_id.in_(group_ids))\
+            .order_by(Message.created_at.asc()).all()
 
     if result is None:
         return data
