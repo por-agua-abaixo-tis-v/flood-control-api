@@ -40,7 +40,7 @@ def validate_geolocation(body):
 
 
 def validate_auth(body):
-    required_keys = ['pswd']
+    required_keys = ['email', 'pswd']
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
