@@ -71,7 +71,7 @@ def auth_user(user_id):
     if password_utils.convert_md5(body['pswd']) != user.pswd:
         raise endpoints_exception(401, "UNAUTHORIZED")
     else:
-        return jwt_token.jwt_tokem(user_id, user.email, user.pswd), 200
+        return jwt_token.jwt_token(user_id, user.email, user.pswd), 200
 
 
 ####################################
@@ -83,7 +83,7 @@ def auth_user(user_id):
 def update_user_geolocation(user_id):
     result = []
     body = request.json
-    body_validations.validate_getolocation(body)
+    body_validations.validate_geolocation(body)
     user = user_model.get(user_id)
 
     if user is None:

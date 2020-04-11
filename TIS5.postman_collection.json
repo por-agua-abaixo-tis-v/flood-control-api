@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "e153c369-d49f-443c-a4ea-a59b169df8b8",
+		"_postman_id": "cf643a53-571d-4691-83b8-49fe94cfeef1",
 		"name": "TIS5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -253,7 +253,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\"pswd\": \"samba123\"\n}",
+							"raw": "{\n\t\"pswd\": \"samba123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
