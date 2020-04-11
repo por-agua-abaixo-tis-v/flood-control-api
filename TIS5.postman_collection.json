@@ -322,15 +322,59 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/<id>/db1437c2-f246-4b1d-aff5-1bee638ad8b8/groups",
+							"raw": "http://{{host}}/users/<id>/groups",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"users",
 								"<id>",
-								"db1437c2-f246-4b1d-aff5-1bee638ad8b8",
 								"groups"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "-19.973655",
+									"disabled": true
+								},
+								{
+									"key": "longitude",
+									"value": "-43.968458",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/c26f7177-0968-420f-a8e4-e02204b1274c/messages",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"c26f7177-0968-420f-a8e4-e02204b1274c",
+								"messages"
 							],
 							"query": [
 								{
