@@ -146,3 +146,22 @@ def delete(session, message):
     x = session.query(Message).get(message.id)
     session.delete(x)
     session.commit()
+
+@db_session
+def get_user_messages(session, user, start_date):
+    _logger.info(
+        f"LISNTING_USER_MESSAGES: {user.id}",
+    )
+    data = []
+    if start_date:
+        result = session.query(Message).filter(Message.user_id == user.id).filter(Message.created_at > start_date).all()
+    else:
+        result = session.query(Message).filter(Message.user_id == user.id).all()
+
+    if result is None:
+        return data
+    else:
+        for row in result:
+            r = to_dict(row)
+            data.append(buid_object_from_row(r))
+        return data

@@ -322,14 +322,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/<id>/db1437c2-f246-4b1d-aff5-1bee638ad8b8/groups",
+							"raw": "http://{{host}}/users/<id>/groups",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
+								"users",
 								"<id>",
-								"db1437c2-f246-4b1d-aff5-1bee638ad8b8",
 								"groups"
 							],
 							"query": [
@@ -341,6 +341,45 @@
 								{
 									"key": "longitude",
 									"value": "-43.968458",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/<id>/messages",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"<id>",
+								"messages"
+							],
+							"query": [
+								{
+									"key": "start_date",
+									"value": "2020-04-10T23:47:56",
 									"disabled": true
 								}
 							]
