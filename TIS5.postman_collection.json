@@ -253,7 +253,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pswd\": \"samba123\"\n}",
+							"raw": "{\n\t\"pswd\": \"samba123\",\n\t\"email\": \"lucas@email.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -261,14 +261,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/<id>/auth",
+							"raw": "http://{{host}}/users/auth",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"<id>",
 								"auth"
 							]
 						}
