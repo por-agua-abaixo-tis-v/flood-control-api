@@ -248,15 +248,12 @@
 				},
 				{
 					"name": "auth user",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
 					"request": {
-						"method": "GET",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n\t\"pswd\": \"samba123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -264,7 +261,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/<id>/auth?pswd=samba123",
+							"raw": "http://{{host}}/users/<id>/auth",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -273,12 +270,6 @@
 								"users",
 								"<id>",
 								"auth"
-							],
-							"query": [
-								{
-									"key": "pswd",
-									"value": "samba123"
-								}
 							]
 						}
 					},

@@ -30,8 +30,17 @@ def validate_user(body):
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
 
-def validate_getolocation(body):
+def validate_geolocation(body):
     required_keys = ['latitude', 'longitude']
+    for key in required_keys:
+        if key not in body.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
+        if body[key] is None:
+            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
+
+
+def validate_auth(body):
+    required_keys = ['pswd']
     for key in required_keys:
         if key not in body.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
