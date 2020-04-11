@@ -3,6 +3,7 @@
 
 import flood.models.user as user_model
 import flood.models.group as group_model
+import flood.models.message as message_model
 import flood.models.user_groups as user_group_model
 
 from flask import Blueprint, jsonify, request
@@ -123,5 +124,29 @@ def get_user_grops(user_id):
         if latitude is not None and longitude is not None:
             aux['distance'] = round(geolocation_utils.check_range(latitude,longitude, group), 2)
         result.append(aux)
+
+    return jsonify(result), 200
+
+####################################
+#            MESSAGES              #
+####################################
+
+@blueprint.route('/users/<user_id>/messages', methods=['GET', 'OPTIONS'])
+def get_user_messages(user_id):
+
+    result = []
+
+    start_date = request.args.get('start_date', None)
+
+    user = user_model.get(user_id)
+
+    if user is None:
+        raise endpoints_exception(404, "USER_NOT_FOUND")
+
+    messages = message_model.get_user_messages(user, start_date)
+
+    if messages is not None:
+        for message in messages:
+            result.append(message.to_dict())
 
     return jsonify(result), 200
