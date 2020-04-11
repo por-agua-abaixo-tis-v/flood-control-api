@@ -143,7 +143,11 @@ def get_user_messages(user_id):
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
 
-    messages = message_model.get_user_messages(user, start_date)
+    groups = user_group_model.get_user_groups(user)
+    if len(groups) == 0:
+        return jsonify(result), 200
+
+    messages = message_model.get_user_messages(user, groups, start_date)
 
     if messages is not None:
         for message in messages:
