@@ -366,25 +366,20 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/c26f7177-0968-420f-a8e4-e02204b1274c/messages",
+							"raw": "http://{{host}}/users/<id>/messages",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"c26f7177-0968-420f-a8e4-e02204b1274c",
+								"<id>",
 								"messages"
 							],
 							"query": [
 								{
-									"key": "latitude",
-									"value": "-19.973655",
-									"disabled": true
-								},
-								{
-									"key": "longitude",
-									"value": "-43.968458",
+									"key": "start_date",
+									"value": "2020-04-10T23:47:56",
 									"disabled": true
 								}
 							]
