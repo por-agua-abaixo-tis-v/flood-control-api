@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cf643a53-571d-4691-83b8-49fe94cfeef1",
+		"_postman_id": "f8c8778b-b777-4a15-b423-e633a15644ae",
 		"name": "TIS5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -152,6 +152,34 @@
 							],
 							"path": [
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate user session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiODRiMWI0NGMtZTFhOS00NGJmLWE3YTktZGVlOTY0ODcyMTZiIiwiZW1haWwiOiJsdWNhc0BlbWFpbC5jb20iLCJwc3dkIjoiZmUyNjQyNzljZmYyNDMwZDMzZGIzZjg3OGQzYjk3ZDIiLCJleHAiOjE1ODY4MDY4NzV9.aYgbju71a67bif8pkbsVrjw_QEw4Pi0SRd-nEaDc_rg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/users/session",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"users",
+								"session"
 							]
 						}
 					},
