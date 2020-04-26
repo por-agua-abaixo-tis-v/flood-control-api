@@ -79,6 +79,22 @@ def auth_user():
         return jsonify(result), 200
 
 
+@blueprint.route('/users/session', methods=['POST'])
+def validate_user():
+    body = request.json
+    body_validations.validate_session(body)
+    payload = jwt_token.jwt_decode(body['token'])
+    user = user_model.get(payload['user_id'])
+
+    if user is None:
+        raise endpoints_exception(404, "USER_NOT_FOUND")
+
+    if payload['pswd'] != user.pswd:
+        raise endpoints_exception(401, "UNAUTHORIZED")
+
+    return jsonify({'Message': "Success"}), 200
+
+
 ####################################
 #            GEOLOCATION           #
 ####################################
