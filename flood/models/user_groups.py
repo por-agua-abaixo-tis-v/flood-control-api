@@ -56,7 +56,7 @@ def associate(session, group, user):
     _logger.info(
         "ASSOCIATING: group: {} user: {}".format(group.to_dict(), user.to_dict()),
     )
-    user_group = session.query(UserGroup).filter(UserGroup.user_id == user.id).filter(UserGroup.user_id == user.id).first()
+    user_group = session.query(UserGroup).filter(UserGroup.user_id == user.id).filter(UserGroup.group_id == group.id).first()
     if user_group is None:
         result = UserGroup(
             user_id=user.id,
