@@ -18,6 +18,7 @@ DB_USER --> user do banco;
 DB_PASS --> senha do banco ;
 DB_IP --> host do banco;
 DB --> nome schema;
+TOKEN_SECRET --> segredo do token jwt;
 ```
 
 ## Execução 
