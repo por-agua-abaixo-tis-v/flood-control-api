@@ -35,6 +35,9 @@ class Group(Base):
     range = Column(
         mysql.INTEGER, nullable=True
     )
+    active = Column(
+        mysql.BOOLEAN, nullable=True
+    )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
@@ -49,6 +52,7 @@ class Group(Base):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "range": self.range,
+            "active": self.active,
             "created_at": None
         }
         if self.created_at is not None:
@@ -64,6 +68,7 @@ def buid_object_from_row(row):
         latitude=row.get("latitude", None),
         longitude=row.get("longitude", None),
         range=row.get("range", None),
+        active=row.get("active", None),
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
@@ -84,7 +89,8 @@ def create(session, group):
         name=group.get("name"),
         latitude=group.get("latitude", None),
         longitude=group.get("longitude", None),
-        range=group.get("range", 2)
+        range=group.get("range", 2),
+        active=group.get("active", False)
     )
     session.add(result)
 
@@ -95,14 +101,16 @@ def create(session, group):
 
 
 @db_session
-def list(session):
+def list(session, active):
     _logger.info(
         "LISNTING_GROUP_MODEL",
     )
 
     data = []
-
-    result = session.query(Group).all()
+    if active is not None:
+        result = session.query(Group).filter(Group.active == active)
+    else:
+        result = session.query(Group).all()
 
     if result is None:
         return data
