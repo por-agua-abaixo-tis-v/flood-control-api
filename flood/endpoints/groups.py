@@ -55,4 +55,15 @@ def delete_group(group_id):
     return jsonify(group.to_dict()), 200
 
 
+@blueprint.route('/groups/<group_id>', methods=['PUT'])
+def update_group(group_id):
+    body = request.json
+
+    group = group_model.update(group_id, body)
+    if group is None:
+        raise endpoints_exception(404, "GROUP_NOT_FOUND")
+    return jsonify(group.to_dict()), 200
+
+
+
 
