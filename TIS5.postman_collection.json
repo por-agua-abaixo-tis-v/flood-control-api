@@ -129,6 +129,34 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Put group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"active\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{host}}/groups/<id>",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"groups",
+								"<id>"
+							]
+						}
+					},
+					"response": []
 				}
 			],
 			"protocolProfileBehavior": {}
