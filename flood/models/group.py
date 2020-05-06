@@ -9,6 +9,7 @@ from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
 from sqlalchemy.types import TIMESTAMP
 
+from flood.endpoints import endpoints_exception
 from flood.models import db_session, Base, get_id, to_dict
 
 logging.basicConfig(level=logging.INFO)
@@ -142,3 +143,22 @@ def delete(session, group):
     x = session.query(Group).get(group.id)
     session.delete(x)
     session.commit()
+
+
+
+@db_session
+def update(session, group_id, body):
+    _logger.info(
+        "UPDATING_GROUP_MODEL: {}".format(group_id),
+    )
+    group = session.query(Group).get(group_id)
+    if group is None:
+        return None
+    else:
+        group.name = body.get("name", group.name)
+        group.latitude = body.get("latitude", group.latitude)
+        group.longitude = body.get("longitude", group.longitude)
+        group.range = body.get("range", group.range)
+        group.active = body.get("active", group.active)
+        r = to_dict(group)
+        return buid_object_from_row(r)
