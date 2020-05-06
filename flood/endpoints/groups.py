@@ -47,11 +47,10 @@ def get_group(group_id):
 
 @blueprint.route('/groups/<group_id>', methods=['DELETE'])
 def delete_group(group_id):
-    group = group_model.get(group_id)
+    group = group_model.delete(group_id)
     if group is None:
         raise endpoints_exception(404, "GROUP_NOT_FOUND")
 
-    group_model.delete(group)
     return jsonify(group.to_dict()), 200
 
 
