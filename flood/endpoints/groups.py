@@ -4,7 +4,7 @@
 import flood.models.group as group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations
+from flood.utils import body_validations, query_param_validations
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -18,7 +18,11 @@ blueprint = Blueprint('groups', __name__)
 @blueprint.route('/groups', methods=['GET', 'OPTIONS'])
 def get_groups():
     result = []
-    groups = group_model.list()
+    if query_param_validations.validate_group_list_filters(request.args):
+        groups = group_model.list(bool(request.args['active']))
+    else:
+        groups = group_model.list(None)
+
     if groups is not None:
         for group in groups:
             result.append(group.to_dict())

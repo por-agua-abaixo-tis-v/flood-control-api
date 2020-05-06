@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "f8c8778b-b777-4a15-b423-e633a15644ae",
+		"_postman_id": "8c06a052-cc29-4b6e-bc1d-f8a766caf268",
 		"name": "TIS5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Alerta Casa do prexos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2\n\t\n}",
+							"raw": "{\n\t\"name\": \"Alerta Casa do prexos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2,\n\t\"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -84,13 +84,19 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/groups",
+							"raw": "http://{{host}}/groups?active=true",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"groups"
+							],
+							"query": [
+								{
+									"key": "active",
+									"value": "true"
+								}
 							]
 						}
 					},
