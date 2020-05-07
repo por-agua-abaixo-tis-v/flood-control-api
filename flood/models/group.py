@@ -9,6 +9,7 @@ from sqlalchemy.schema import Column
 from sqlalchemy.sql import text
 from sqlalchemy.types import TIMESTAMP
 
+from flood.endpoints import endpoints_exception
 from flood.models import db_session, Base, get_id, to_dict
 
 logging.basicConfig(level=logging.INFO)
@@ -35,6 +36,9 @@ class Group(Base):
     range = Column(
         mysql.INTEGER, nullable=True
     )
+    active = Column(
+        mysql.BOOLEAN, nullable=True
+    )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
@@ -49,6 +53,7 @@ class Group(Base):
             "latitude": self.latitude,
             "longitude": self.longitude,
             "range": self.range,
+            "active": self.active,
             "created_at": None
         }
         if self.created_at is not None:
@@ -64,6 +69,7 @@ def buid_object_from_row(row):
         latitude=row.get("latitude", None),
         longitude=row.get("longitude", None),
         range=row.get("range", None),
+        active=row.get("active", None),
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
@@ -84,7 +90,8 @@ def create(session, group):
         name=group.get("name"),
         latitude=group.get("latitude", None),
         longitude=group.get("longitude", None),
-        range=group.get("range", 2)
+        range=group.get("range", 2),
+        active=group.get("active", False)
     )
     session.add(result)
 
@@ -95,14 +102,16 @@ def create(session, group):
 
 
 @db_session
-def list(session):
+def list(session, active):
     _logger.info(
         "LISNTING_GROUP_MODEL",
     )
 
     data = []
-
-    result = session.query(Group).all()
+    if active is not None:
+        result = session.query(Group).filter(Group.active == active)
+    else:
+        result = session.query(Group).all()
 
     if result is None:
         return data
@@ -134,3 +143,22 @@ def delete(session, group):
     x = session.query(Group).get(group.id)
     session.delete(x)
     session.commit()
+
+
+
+@db_session
+def update(session, group_id, body):
+    _logger.info(
+        "UPDATING_GROUP_MODEL: {}".format(group_id),
+    )
+    group = session.query(Group).get(group_id)
+    if group is None:
+        return None
+    else:
+        group.name = body.get("name", group.name)
+        group.latitude = body.get("latitude", group.latitude)
+        group.longitude = body.get("longitude", group.longitude)
+        group.range = body.get("range", group.range)
+        group.active = body.get("active", group.active)
+        r = to_dict(group)
+        return buid_object_from_row(r)
