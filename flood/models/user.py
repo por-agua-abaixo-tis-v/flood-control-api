@@ -130,10 +130,12 @@ def get_by_email(session, email):
 
 
 @db_session
-def delete(session, user):
+def delete(session, user_id):
     _logger.info(
-        "DELETING_USER_MODEL: {}".format(user.to_dict()),
+        "DELETING_USER_MODEL: {}".format(user_id),
     )
-    x = session.query(Group).get(user.id)
+    x = session.query(User).get(user_id)
+    r = to_dict(x)
     session.delete(x)
     session.commit()
+    return buid_object_from_row(r)

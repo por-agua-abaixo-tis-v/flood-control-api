@@ -136,13 +136,15 @@ def get(session, id):
 
 
 @db_session
-def delete(session, group):
+def delete(session, group_id):
     _logger.info(
-        "DELETING_GROUP_MODEL: {}".format(group.to_dict()),
+        "DELETING_GROUP_MODEL: {}".format(group_id),
     )
-    x = session.query(Group).get(group.id)
+    x = session.query(Group).get(group_id)
+    r = to_dict(x)
     session.delete(x)
     session.commit()
+    return buid_object_from_row(r)
 
 
 
