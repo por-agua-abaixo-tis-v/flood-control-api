@@ -47,11 +47,11 @@ def get_user(user_id):
 
 @blueprint.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = user_model.get(user_id)
+    user = user_model.delete(user_id)
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
 
-    user_model.delete(user)
+
     return jsonify(user.to_dict()), 200
 
 
