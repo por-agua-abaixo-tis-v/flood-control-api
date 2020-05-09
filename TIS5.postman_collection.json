@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "8c06a052-cc29-4b6e-bc1d-f8a766caf268",
+		"_postman_id": "3ca772dd-3e99-46ac-a8c2-d1c1eae35064",
 		"name": "TIS5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Alerta Casa do prexos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2,\n\t\"active\": true\n}",
+							"raw": "{\n\t\"name\": \"Bernardo Vasconcelos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2,\n\t\"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,7 +171,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"lucas@email.com\",\n\t\"name\": \"lucas\",\n\t\"pswd\": \"samba123\"\n}",
+							"raw": "{\n\t\"email\": \"teste@email.com\",\n\t\"name\": \"teste\",\n\t\"pswd\": \"teste\",\n\t\"adm\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
