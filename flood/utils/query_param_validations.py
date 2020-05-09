@@ -18,3 +18,11 @@ def validate_group_list_filters(args):
         raise endpoints_exception(400, f"BAD REQUEST: Invalid value for query param active")
     else:
         return True
+
+
+def validate_token(args):
+    required_keys = ['token']
+    for key in required_keys:
+        if key not in args.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing query param {key}")
+    return args['token']

@@ -5,7 +5,7 @@ import flood.models.message as message_model
 import flood.models.group as group_model
 import flood.models.user as user_model
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, query_param_validations
+from flood.utils import body_validations, query_param_validations, jwt_token
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -41,6 +41,7 @@ def get_messages():
 
 
 @blueprint.route('/messages', methods=['POST'])
+@jwt_token.token_required
 def post_message():
     body = request.json
     query_param_validations.validate_message(request.args)

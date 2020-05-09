@@ -7,7 +7,7 @@ import flood.models.message as message_model
 import flood.models.user_groups as user_group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, password_utils, query_param_validations, geolocation_utils, jwt_token
+from flood.utils import body_validations, password_utils, geolocation_utils, jwt_token
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -79,28 +79,13 @@ def auth_user():
         return jsonify(result), 200
 
 
-@blueprint.route('/users/session', methods=['POST'])
-def validate_user():
-    body = request.json
-    body_validations.validate_session(body)
-    payload = jwt_token.jwt_decode(body['token'])
-    user = user_model.get(payload['user_id'])
-
-    if user is None:
-        raise endpoints_exception(404, "USER_NOT_FOUND")
-
-    if payload['pswd'] != user.pswd:
-        raise endpoints_exception(401, "UNAUTHORIZED")
-
-    return jsonify({'Message': "Success"}), 200
-
-
 ####################################
 #            GEOLOCATION           #
 ####################################
 
 
 @blueprint.route('/users/<user_id>/geolocation', methods=['POST'])
+@jwt_token.token_required
 def update_user_geolocation(user_id):
     result = []
     body = request.json
@@ -124,9 +109,8 @@ def update_user_geolocation(user_id):
     return jsonify(result), 200
 
 
-
-
 @blueprint.route('/users/<user_id>/groups', methods=['GET', 'OPTIONS'])
+@jwt_token.token_required
 def get_user_groups(user_id):
     result = []
 
@@ -151,7 +135,9 @@ def get_user_groups(user_id):
 #            MESSAGES              #
 ####################################
 
+
 @blueprint.route('/users/<user_id>/messages', methods=['GET', 'OPTIONS'])
+@jwt_token.token_required
 def get_user_messages(user_id):
 
     result = []

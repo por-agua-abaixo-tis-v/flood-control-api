@@ -46,12 +46,3 @@ def validate_auth(body):
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
-
-
-def validate_session(body):
-    required_keys = ['token']
-    for key in required_keys:
-        if key not in body.keys():
-            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
-        if body[key] is None:
-            raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
