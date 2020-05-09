@@ -139,13 +139,15 @@ def get(session, id):
 
 
 @db_session
-def delete(session, message):
+def delete(session, message_id):
     _logger.info(
-        "DELETING_MESSAGE_MODEL: {}".format(message.to_dict()),
+        "DELETING_MESSAGE_MODEL: {}".format(message_id),
     )
-    x = session.query(Message).get(message.id)
+    x = session.query(Message).get(message_id)
+    r = to_dict(x)
     session.delete(x)
     session.commit()
+    return buid_object_from_row(r)
 
 @db_session
 def get_user_messages(session, user, groups, start_date):

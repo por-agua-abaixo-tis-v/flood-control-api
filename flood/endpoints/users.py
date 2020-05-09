@@ -47,11 +47,11 @@ def get_user(user_id):
 
 @blueprint.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
-    user = user_model.get(user_id)
+    user = user_model.delete(user_id)
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
 
-    user_model.delete(user)
+
     return jsonify(user.to_dict()), 200
 
 
@@ -112,9 +112,9 @@ def update_user_geolocation(user_id):
 
     latitude = body.get('latitude')
     longitude = body.get('longitude')
-    groups = group_model.list()
+    groups = group_model.list(None)
     for group in groups:
-        distance = geolocation_utils.check_range(latitude,longitude, group)
+        distance = geolocation_utils.check_range(latitude, longitude, group)
         if distance is not None:
             user_group_model.associate(group, user)
             aux = group.to_dict()
@@ -127,7 +127,7 @@ def update_user_geolocation(user_id):
 
 
 @blueprint.route('/users/<user_id>/groups', methods=['GET', 'OPTIONS'])
-def get_user_grops(user_id):
+def get_user_groups(user_id):
     result = []
 
     user = user_model.get(user_id)

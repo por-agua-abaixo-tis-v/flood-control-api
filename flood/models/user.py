@@ -34,6 +34,9 @@ class User(Base):
     pswd = Column(
         mysql.VARCHAR(length=128), nullable=False
     )
+    adm = Column(
+        mysql.BOOLEAN, nullable=True
+    )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
@@ -46,6 +49,7 @@ class User(Base):
             "id": self.id,
             "name": self.name,
             "email": self.email,
+            "adm": self.adm,
             "created_at": None
         }
         if self.created_at is not None:
@@ -60,6 +64,7 @@ def buid_object_from_row(row):
         id=row.get("id", None),
         email=row.get("email", None),
         pswd=row.get("pswd", None),
+        adm=row.get("adm", None),
     )
     if "created_at" in row.keys():
         user.created_at = datetime.strptime(row["created_at"], dateformat)
@@ -75,7 +80,8 @@ def create(session, user):
     result = User(
         name=user.get("name"),
         email=user.get("email"),
-        pswd=user.get("pswd")
+        pswd=user.get("pswd"),
+        adm=user.get("adm", False)
     )
     session.add(result)
 
@@ -130,10 +136,12 @@ def get_by_email(session, email):
 
 
 @db_session
-def delete(session, user):
+def delete(session, user_id):
     _logger.info(
-        "DELETING_USER_MODEL: {}".format(user.to_dict()),
+        "DELETING_USER_MODEL: {}".format(user_id),
     )
-    x = session.query(Group).get(user.id)
+    x = session.query(User).get(user_id)
+    r = to_dict(x)
     session.delete(x)
     session.commit()
+    return buid_object_from_row(r)

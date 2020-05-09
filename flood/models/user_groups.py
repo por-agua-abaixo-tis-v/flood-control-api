@@ -29,8 +29,8 @@ class UserGroup(Base):
     user_id = Column(mysql.VARCHAR(length=64), ForeignKey(User.id, ondelete='CASCADE'), primary_key=True)
     group_id = Column(mysql.VARCHAR(length=64), ForeignKey(Group.id, ondelete='CASCADE'), primary_key=True)
 
-    user = relationship(User, backref=backref("employee_assoc"))
-    group = relationship(Group, backref=backref("department_assoc"))
+    user = relationship(User, backref=backref("employee_assoc", cascade="all, delete-orphan"))
+    group = relationship(Group, backref=backref("department_assoc", cascade="all, delete-orphan"))
 
     def __repr__(self):
         return f"<UserGrop(user={self.user_id}, group={self.group_id})>"

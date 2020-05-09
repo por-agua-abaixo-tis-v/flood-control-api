@@ -68,11 +68,10 @@ def get_message(message_id):
 
 @blueprint.route('/messages/<message_id>', methods=['DELETE'])
 def delete_message(message_id):
-    message = message_model.get(message_id)
+    message = message_model.delete(message_id)
     if message is None:
         raise endpoints_exception(404, "GROUP_NOT_FOUND")
 
-    message_model.delete(message)
     return jsonify(message.to_dict()), 200
 
 
