@@ -4,6 +4,10 @@ import jwt
 import datetime
 import os
 from flood.endpoints import endpoints_exception
+from flood.utils import query_param_validations
+import flood.models.user as user_model
+from flask import request
+from functools import wraps
 
 
 def jwt_token(user_id, email, pswd):
@@ -24,4 +28,21 @@ def jwt_decode(token):
 
     return payload
 
+
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = query_param_validations.validate_token(request.args)
+        payload = jwt_decode(token)
+        user = user_model.get(payload['user_id'])
+
+        if user is None:
+            raise endpoints_exception(404, "USER_NOT_FOUND")
+
+        if payload['pswd'] != user.pswd:
+            raise endpoints_exception(401, "UNAUTHORIZED")
+
+        return f(*args, **kwargs)
+
+    return decorated
 

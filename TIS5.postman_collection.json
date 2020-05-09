@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Bernardo Vasconcelos\",\n\t\"latitude\" : -19.974021,\n\t\"longitude\": -43.970320,\n\t\"range\": 2,\n\t\"active\": true\n}",
+							"raw": "{\n\t\"name\": \"Bernardo Vasconcelos\",\n\t\"latitude\" : -19.8762564,\n\t\"longitude\": -43.9311202,\n\t\"range\": 2,\n\t\"active\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,7 +171,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"teste@email.com\",\n\t\"name\": \"teste\",\n\t\"pswd\": \"teste\",\n\t\"adm\": true\n}",
+							"raw": "{\n\t\"email\": \"teste@email.com\",\n\t\"name\": \"teste\",\n\t\"pswd\": \"teste\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -186,34 +186,6 @@
 							],
 							"path": [
 								"users"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "validate user session",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiODRiMWI0NGMtZTFhOS00NGJmLWE3YTktZGVlOTY0ODcyMTZiIiwiZW1haWwiOiJsdWNhc0BlbWFpbC5jb20iLCJwc3dkIjoiZmUyNjQyNzljZmYyNDMwZDMzZGIzZjg3OGQzYjk3ZDIiLCJleHAiOjE1ODY4MDY4NzV9.aYgbju71a67bif8pkbsVrjw_QEw4Pi0SRd-nEaDc_rg\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{host}}/users/session",
-							"protocol": "http",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"users",
-								"session"
 							]
 						}
 					},
@@ -315,7 +287,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"pswd\": \"samba123\",\n\t\"email\": \"lucas@email.com\"\n}",
+							"raw": "{\n\t\"email\": \"teste@email.com\",\n\t\"pswd\": \"teste\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -351,7 +323,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/<id>/geolocation",
+							"raw": "http://{{host}}/users/<id>/geolocation?token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -360,6 +332,12 @@
 								"users",
 								"<id>",
 								"geolocation"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "<token>"
+								}
 							]
 						}
 					},
@@ -383,14 +361,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/<id>/groups",
+							"raw": "http://{{host}}/users/<user_id>/groups?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWExZjFiY2YtMzA3MC00Y2IxLWI4MmItMTBjOGFmOTY2OTVhIiwiZW1haWwiOiJ0ZXN0ZUBlbWFpbC5jb20iLCJwc3dkIjoiNjk4ZGMxOWQ0ODljNGU0ZGI3M2UyOGE3MTNlYWIwN2IiLCJleHAiOjE1ODkxMzMzMjZ9.5aQ6biARh12pgEi3LXHidiBTzduPvoOtwIYELQ7guys",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"users",
-								"<id>",
+								"<user_id>",
 								"groups"
 							],
 							"query": [
@@ -403,6 +381,10 @@
 									"key": "longitude",
 									"value": "-43.968458",
 									"disabled": true
+								},
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWExZjFiY2YtMzA3MC00Y2IxLWI4MmItMTBjOGFmOTY2OTVhIiwiZW1haWwiOiJ0ZXN0ZUBlbWFpbC5jb20iLCJwc3dkIjoiNjk4ZGMxOWQ0ODljNGU0ZGI3M2UyOGE3MTNlYWIwN2IiLCJleHAiOjE1ODkxMzMzMjZ9.5aQ6biARh12pgEi3LXHidiBTzduPvoOtwIYELQ7guys"
 								}
 							]
 						}
@@ -427,7 +409,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/users/<id>/messages",
+							"raw": "http://{{host}}/users/<id>/messages?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWExZjFiY2YtMzA3MC00Y2IxLWI4MmItMTBjOGFmOTY2OTVhIiwiZW1haWwiOiJ0ZXN0ZUBlbWFpbC5jb20iLCJwc3dkIjoiNjk4ZGMxOWQ0ODljNGU0ZGI3M2UyOGE3MTNlYWIwN2IiLCJleHAiOjE1ODkxMzMzMjZ9.5aQ6biARh12pgEi3LXHidiBTzduPvoOtwIYELQ7guys",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -442,6 +424,10 @@
 									"key": "start_date",
 									"value": "2020-04-10T23:47:56",
 									"disabled": true
+								},
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiOWExZjFiY2YtMzA3MC00Y2IxLWI4MmItMTBjOGFmOTY2OTVhIiwiZW1haWwiOiJ0ZXN0ZUBlbWFpbC5jb20iLCJwc3dkIjoiNjk4ZGMxOWQ0ODljNGU0ZGI3M2UyOGE3MTNlYWIwN2IiLCJleHAiOjE1ODkxMzMzMjZ9.5aQ6biARh12pgEi3LXHidiBTzduPvoOtwIYELQ7guys"
 								}
 							]
 						}
@@ -469,7 +455,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/messages?group_id=82f4ff41-015f-4955-83cb-88593db27300&user_id=prexos",
+							"raw": "http://{{host}}/messages?group_id=<group_id>&user_id=<user_id>&token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -480,11 +466,15 @@
 							"query": [
 								{
 									"key": "group_id",
-									"value": "82f4ff41-015f-4955-83cb-88593db27300"
+									"value": "<group_id>"
 								},
 								{
 									"key": "user_id",
-									"value": "prexos"
+									"value": "<user_id>"
+								},
+								{
+									"key": "token",
+									"value": "<token>"
 								}
 							]
 						}
