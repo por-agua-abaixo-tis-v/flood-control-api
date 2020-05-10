@@ -32,9 +32,13 @@ def get_users():
 def post_user():
     body = request.json
     body_validations.validate_user(body)
-    body['pswd'] = password_utils.convert_md5(body['pswd'])
-    user = user_model.create(body)
-    return jsonify(user.to_dict()), 200
+    existing_user = user_model.get_by_email(body['email'])
+    if existing_user:
+        raise endpoints_exception(403, "EMAIL_ALREADY_IN_USE")
+    else:
+        body['pswd'] = password_utils.convert_md5(body['pswd'])
+        user = user_model.create(body)
+        return jsonify(user.to_dict()), 200
 
 
 @blueprint.route('/users/<user_id>', methods=['GET', 'OPTIONS'])
