@@ -73,6 +73,7 @@ def get_message(message_id):
 
 
 @blueprint.route('/messages/<message_id>', methods=['DELETE'])
+@jwt_token.token_required
 def delete_message(message_id):
     message = message_model.delete(message_id)
     if message is None:

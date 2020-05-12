@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "3ca772dd-3e99-46ac-a8c2-d1c1eae35064",
+		"_postman_id": "ff25c8be-0286-4528-8976-c7165de8f633",
 		"name": "TIS5",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -23,13 +23,19 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/groups",
+							"raw": "http://{{host}}/groups?token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
 								"groups"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "<token>"
+								}
 							]
 						}
 					},
@@ -117,7 +123,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/groups/<id>",
+							"raw": "http://{{host}}/groups/<id>?token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -125,6 +131,12 @@
 							"path": [
 								"groups",
 								"<id>"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "<token>"
+								}
 							]
 						}
 					},
@@ -145,7 +157,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/groups/<id>",
+							"raw": "http://{{host}}/groups/<id>?token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -153,6 +165,12 @@
 							"path": [
 								"groups",
 								"<id>"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "<token>"
+								}
 							]
 						}
 					},
@@ -557,7 +575,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{host}}/messages/02b5fc11-157c-479a-a1ea-b04957e1a735",
+							"raw": "http://{{host}}/messages/02b5fc11-157c-479a-a1ea-b04957e1a735?token=<token>",
 							"protocol": "http",
 							"host": [
 								"{{host}}"
@@ -565,6 +583,12 @@
 							"path": [
 								"messages",
 								"02b5fc11-157c-479a-a1ea-b04957e1a735"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "<token>"
+								}
 							]
 						}
 					},
