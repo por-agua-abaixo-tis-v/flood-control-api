@@ -4,7 +4,7 @@
 import flood.models.group as group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, query_param_validations
+from flood.utils import body_validations, query_param_validations, jwt_token
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -30,6 +30,7 @@ def get_groups():
 
 
 @blueprint.route('/groups', methods=['POST'])
+@jwt_token.token_required
 def post_group():
     body = request.json
     body_validations.validate_group(body)
@@ -46,6 +47,7 @@ def get_group(group_id):
 
 
 @blueprint.route('/groups/<group_id>', methods=['DELETE'])
+@jwt_token.token_required
 def delete_group(group_id):
     group = group_model.delete(group_id)
     if group is None:
@@ -55,6 +57,7 @@ def delete_group(group_id):
 
 
 @blueprint.route('/groups/<group_id>', methods=['PUT'])
+@jwt_token.token_required
 def update_group(group_id):
     body = request.json
 

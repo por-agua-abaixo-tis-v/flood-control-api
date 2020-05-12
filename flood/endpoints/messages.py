@@ -4,6 +4,7 @@
 import flood.models.message as message_model
 import flood.models.group as group_model
 import flood.models.user as user_model
+import flood.models.user_groups as user_group_model
 from flask import Blueprint, jsonify, request
 from flood.utils import body_validations, query_param_validations, jwt_token
 from flood.endpoints import endpoints_exception
@@ -50,13 +51,17 @@ def post_message():
     group = group_model.get(request.args['group_id'])
     if group is None:
         raise endpoints_exception(404, "GROUP_NOT_FOUND")
-    user = user_model.get(request.args['user_id'])
 
+    user = user_model.get(request.args['user_id'])
     if user is None:
         raise endpoints_exception(404, "USER_NOT_FOUND")
 
-    message = message_model.create(body['text'], user, group)
-    return jsonify(message.to_dict()), 200
+    user_groups = user_group_model.check_user_group(user, group)
+    if user_groups is not None:
+        message = message_model.create(body['text'], user, group)
+        return jsonify(message.to_dict()), 200
+    else:
+        raise endpoints_exception(404, "USER_NOT_IN_GROUP_FOUND")
 
 
 @blueprint.route('/messages/<message_id>', methods=['GET', 'OPTIONS'])
@@ -68,6 +73,7 @@ def get_message(message_id):
 
 
 @blueprint.route('/messages/<message_id>', methods=['DELETE'])
+@jwt_token.token_required
 def delete_message(message_id):
     message = message_model.delete(message_id)
     if message is None:

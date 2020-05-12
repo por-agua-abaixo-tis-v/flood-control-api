@@ -91,3 +91,18 @@ def get_user_groups(session, user):
             r = to_dict(row.group)
             groups.append(build_group_from_row(r))
         return groups
+
+
+@db_session
+def check_user_group(session, user, group):
+    _logger.info(
+        "CHECKING_USER_GROUPS: ".format(user.to_dict()),
+    )
+
+    result = session.query(UserGroup).join(Group).filter(UserGroup.user_id == user.id)\
+        .filter(UserGroup.group_id == group.id).first()
+
+    if result is None:
+        return None
+    else:
+        return buid_object_from_row(to_dict(result))
