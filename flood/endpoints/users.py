@@ -89,7 +89,7 @@ def auth_user():
 
 
 @blueprint.route('/users/<user_id>/geolocation', methods=['POST'])
-@jwt_token.token_required
+# @jwt_token.token_required
 def update_user_geolocation(user_id):
     result = []
     body = request.json
@@ -114,7 +114,7 @@ def update_user_geolocation(user_id):
 
 
 @blueprint.route('/users/<user_id>/groups', methods=['GET', 'OPTIONS'])
-@jwt_token.token_required
+# @jwt_token.token_required
 def get_user_groups(user_id):
     result = []
 
@@ -141,7 +141,7 @@ def get_user_groups(user_id):
 
 
 @blueprint.route('/users/<user_id>/messages', methods=['GET', 'OPTIONS'])
-@jwt_token.token_required
+# @jwt_token.token_required
 def get_user_messages(user_id):
 
     result = []
