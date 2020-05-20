@@ -42,7 +42,7 @@ def get_messages():
 
 
 @blueprint.route('/messages', methods=['POST'])
-@jwt_token.token_required
+# @jwt_token.token_required
 def post_message():
     body = request.json
     query_param_validations.validate_message(request.args)
@@ -73,7 +73,7 @@ def get_message(message_id):
 
 
 @blueprint.route('/messages/<message_id>', methods=['DELETE'])
-@jwt_token.token_required
+# @jwt_token.token_required
 def delete_message(message_id):
     message = message_model.delete(message_id)
     if message is None:
