@@ -23,7 +23,6 @@ def get_groups():
             groups = group_model.list(True)
         else:
             groups = group_model.list(False)
-
     else:
         groups = group_model.list(None)
 
