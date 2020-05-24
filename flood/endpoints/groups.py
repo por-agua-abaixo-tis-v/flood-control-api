@@ -19,7 +19,10 @@ blueprint = Blueprint('groups', __name__)
 def get_groups():
     result = []
     if query_param_validations.validate_group_list_filters(request.args):
-        groups = group_model.list(bool(request.args['active']))
+        if request.args['active'] == 'true':
+            groups = group_model.list(True)
+        else:
+            groups = group_model.list(False)
     else:
         groups = group_model.list(None)
 
