@@ -19,6 +19,10 @@ DB_PASS --> senha do banco ;
 DB_IP --> host do banco;
 DB --> nome schema;
 TOKEN_SECRET --> segredo do token jwt;
+TWITTER_ACCESS_TOKEN --> Twitter API Access token;
+TWITTER_ACCESS_TOKEN_SECRET --> Twitter API Access token secret;
+TWITTER_CONSUMER_KEY --> Twitter API key;
+TWITTER_CONSUMER_SECRET --> Twitter API secret key;
 ```
 
 ## Execução 
