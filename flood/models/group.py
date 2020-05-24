@@ -39,6 +39,9 @@ class Group(Base):
     active = Column(
         mysql.BOOLEAN, nullable=True
     )
+    severity = Column(
+        mysql.VARCHAR(length=64), nullable=True
+    )
     created_at = Column(
         TIMESTAMP, server_default=text('CURRENT_TIMESTAMP'), nullable=False, index=True
     )
@@ -54,6 +57,7 @@ class Group(Base):
             "longitude": self.longitude,
             "range": self.range,
             "active": self.active,
+            "severity": self.severity,
             "created_at": None
         }
         if self.created_at is not None:
@@ -70,6 +74,7 @@ def buid_object_from_row(row):
         longitude=row.get("longitude", None),
         range=row.get("range", None),
         active=row.get("active", None),
+        severity=row.get("severity", None)
     )
     if "created_at" in row.keys():
         group.created_at = datetime.strptime(row["created_at"], dateformat)
@@ -91,7 +96,8 @@ def create(session, group):
         latitude=group.get("latitude", None),
         longitude=group.get("longitude", None),
         range=group.get("range", 2),
-        active=group.get("active", False)
+        active=group.get("active", False),
+        severity=group.get("severity", 'low')
     )
     session.add(result)
 
@@ -162,5 +168,6 @@ def update(session, group_id, body):
         group.longitude = body.get("longitude", group.longitude)
         group.range = body.get("range", group.range)
         group.active = body.get("active", group.active)
+        group.severity = body.get("severity", group.severity)
         r = to_dict(group)
         return buid_object_from_row(r)
