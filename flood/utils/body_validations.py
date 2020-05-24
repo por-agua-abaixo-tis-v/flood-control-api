@@ -11,6 +11,11 @@ def validate_group(body):
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
+    if 'severity' in body.keys():
+        if body['severity'] not in ['low', 'medium', 'high', 'extreme']:
+            raise endpoints_exception(400, f"BAD REQUEST: Invalid value for severity. Use low, medium, high or extreme")
+
+
 
 def validate_message(body):
     required_keys = ['text']
