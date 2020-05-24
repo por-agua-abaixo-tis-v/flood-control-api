@@ -6,6 +6,7 @@ from flood.endpoints.status import blueprint as status_bp
 from flood.endpoints.groups import blueprint as groups_bp
 from flood.endpoints.messages import blueprint as messages_bp
 from flood.endpoints.users import blueprint as users_bp
+from flood.endpoints.twitter import blueprint as twitter_bp
 import warnings
 from flood import config as flood_config
 
@@ -31,6 +32,7 @@ app.register_blueprint(status_bp)
 app.register_blueprint(groups_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(messages_bp)
+app.register_blueprint(twitter_bp)
 
 if __name__ == "__main__":
     app_port = 8080

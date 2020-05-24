@@ -26,3 +26,10 @@ def validate_token(args):
         if key not in args.keys():
             raise endpoints_exception(400, f"BAD REQUEST: Missing query param {key}")
     return args['token']
+
+
+def validate_twitter(args):
+    required_keys = ['num', 'user']
+    for key in required_keys:
+        if key not in args.keys():
+            raise endpoints_exception(400, f"BAD REQUEST: Missing query param {key}")
