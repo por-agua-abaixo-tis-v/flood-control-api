@@ -6,7 +6,7 @@ import flood.models.group as group_model
 import flood.models.user as user_model
 import flood.models.user_groups as user_group_model
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, query_param_validations, jwt_token
+from flood.utils import body_validations, query_param_validations, jwt_token, request_cache_utils
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -59,6 +59,7 @@ def post_message():
     user_groups = user_group_model.check_user_group(user, group)
     if user_groups is not None:
         message = message_model.create(body['text'], user, group)
+        request_cache_utils.complete_request(body.get('request_id', None))
         return jsonify(message.to_dict()), 200
     else:
         raise endpoints_exception(404, "USER_NOT_IN_GROUP_FOUND")

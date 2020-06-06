@@ -3,6 +3,8 @@
 
 from flood.endpoints import endpoints_exception
 
+from flood.utils import request_cache_utils
+
 def validate_group(body):
     required_keys = ['name']
     for key in required_keys:
@@ -15,6 +17,7 @@ def validate_group(body):
         if body['severity'] not in ['low', 'medium', 'high', 'extreme']:
             raise endpoints_exception(400, f"BAD REQUEST: Invalid value for severity. Use low, medium, high or extreme")
 
+    request_cache_utils.check_processing_or_complete(body.get('request_id', None))
 
 
 def validate_message(body):
@@ -25,6 +28,8 @@ def validate_message(body):
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
+    request_cache_utils.check_processing_or_complete(body.get('request_id', None))
+
 
 def validate_user(body):
     required_keys = ['email', 'pswd', 'name']
@@ -34,6 +39,7 @@ def validate_user(body):
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
 
+    request_cache_utils.check_processing_or_complete(body.get('request_id', None))
 
 def validate_geolocation(body):
     required_keys = ['latitude', 'longitude']
@@ -42,6 +48,7 @@ def validate_geolocation(body):
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
+    request_cache_utils.check_processing_or_complete(body.get('request_id', None))
 
 
 def validate_auth(body):
@@ -51,3 +58,5 @@ def validate_auth(body):
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} on body")
         if body[key] is None:
             raise endpoints_exception(400, f"BAD REQUEST: Missing {key} value on body")
+
+    request_cache_utils.check_processing_or_complete(body.get('request_id', None))
