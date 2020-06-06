@@ -4,7 +4,7 @@
 import flood.models.group as group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, query_param_validations, jwt_token
+from flood.utils import body_validations, query_param_validations, jwt_token, request_cache_utils
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -38,6 +38,7 @@ def post_group():
     body = request.json
     body_validations.validate_group(body)
     group = group_model.create(body)
+    request_cache_utils.complete_request(body.get('request_id', None))
     return jsonify(group.to_dict()), 200
 
 

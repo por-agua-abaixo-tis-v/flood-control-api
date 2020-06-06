@@ -7,7 +7,7 @@ import flood.models.message as message_model
 import flood.models.user_groups as user_group_model
 
 from flask import Blueprint, jsonify, request
-from flood.utils import body_validations, password_utils, geolocation_utils, jwt_token
+from flood.utils import body_validations, password_utils, geolocation_utils, jwt_token, request_cache_utils
 from flood.endpoints import endpoints_exception
 
 import logging
@@ -38,6 +38,7 @@ def post_user():
     else:
         body['pswd'] = password_utils.convert_md5(body['pswd'])
         user = user_model.create(body)
+        request_cache_utils.complete_request(body.get('request_id', None))
         return jsonify(user.to_dict()), 200
 
 
@@ -80,6 +81,7 @@ def auth_user():
     else:
         result['user'] = user.to_dict()
         result['token'] = jwt_token.jwt_token(user.id, user.email, user.pswd)
+        request_cache_utils.complete_request(body.get('request_id', None))
         return jsonify(result), 200
 
 
@@ -110,6 +112,7 @@ def update_user_geolocation(user_id):
             aux['distance'] = round(distance, 2)
             result.append(aux)
 
+    request_cache_utils.complete_request(body.get('request_id', None))
     return jsonify(result), 200
 
 
