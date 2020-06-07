@@ -29,3 +29,10 @@ TWITTER_CONSUMER_SECRET --> Twitter API secret key;
 ```
 python run.py
 ```
+
+
+## Testes unitários 
+```
+coverage run --omit="tests/*,env/*" -m unittest discover
+coverage report -m 
+```
